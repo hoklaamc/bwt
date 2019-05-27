@@ -1,6 +1,6 @@
 import sys
 
-filename = sys.argv[1]
+from_file = len(sys.argv) == 2
 
 def concat_and_sort(col, char_array):
   i = 0
@@ -25,8 +25,17 @@ def dwt_decode(r, col):
     concat_and_sort(col, char_array)
   return char_array[r - 1]
 
-with open(filename) as file:
-  content = file.readlines()
-  content = [line.strip() for line in content]
-  for i in range(0, len(content) - 1, 2):
-    print(dwt_decode(int(content[i]), content[i+1]))
+if (from_file):
+  filename = sys.argv[1]
+  with open(filename) as file:
+    content = file.readlines()
+    content = [line.strip() for line in content]
+    for i in range(0, len(content) - 1, 2):
+      print(dwt_decode(int(content[i]), content[i+1]))
+else:
+  while(True):
+    r = int(sys.stdin.readline())
+    if (r == 0):
+      exit()
+    col = sys.stdin.readline().strip()
+    print(dwt_decode(r, col))
